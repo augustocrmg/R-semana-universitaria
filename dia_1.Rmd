@@ -1,0 +1,357 @@
+# Introdução ao R
+```{r}
+R.version
+```
+```{r}
+getwd()
+```
+```{r}
+help(getwd)
+?getwd
+```
+# Objetos
+```{r}
+pi <- 3.1415
+e = 2.7182
+i <- ((e ^ 2) + 45)/pi
+print(pi)
+print(e)
+```
+```{r}
+ls()
+```
+
+
+```{r}
+name <- readline(prompt="Seu nome: ")
+```
+
+```{r}
+name
+```
+```{r}
+inteiro1 <- as.integer(readline("Digite um inteiro:"))
+print(inteiro1)
+```
+```{r}
+inteiro2 = scan(what = integer(), nlines = 1)
+inteiro2
+```
+# Vetores
+```{r}
+a = c('Geraldo', 'Marcelo', 'Luis', 'Vinicius')
+a
+```
+```{r}
+a = c(1,2,3,4,5)
+b = c(TRUE, FALSE, T, F)
+d = c(1+2i, NA, 3)
+f = c("A", "B", NA)
+a
+```
+```{r}
+lucros <- c(100, 50, 10, 70)
+lucros[2]
+```
+```{r}
+lucros[1:4]
+```
+```{r}
+lucros[2] <- 80
+lucros[2]
+```
+```{r}
+lucros[1:4] <- c(70, 10, 50, 100)
+lucros
+```
+```{r}
+prejuizo <- c()
+print(prejuizo)
+```
+
+```{r}
+mais_prejuizo <- vector()
+print(mais_prejuizo)
+```
+# Operações com vetores
+```{r}
+v = c(4, 7, 23.5, 76, 80)
+v * 2
+```
+```{r}
+sqrt(v)
+```
+```{r}
+v1 = c(1, 2, 3, 4, 5, 6)
+v2 = c(1, 2, 3, 4, 5, 6)
+v1 + v2
+```
+```{r}
+v1 - v2
+```
+```{r}
+v1 ^ v2
+```
+```{r}
+v1 = c(1, 2, 3, 4, 5, 6)
+v2 = c(1, 2, 3)
+v1 + v2
+```
+```{r}
+v1 - v2
+```
+```{r}
+v1 ^ v2
+```
+```{r}
+v1 = c(1, 2, 3, 4, 5, 6)
+v2 = c(1, 2, 3, 4)
+v1 + v2
+```
+```{r}
+v1 - v2
+```
+```{r}
+v1 ^ v2
+```
+# Fatores
+```{r}
+civil = c('solteiro', 'casado', 'casado', 'solteiro', 'solteiro')
+estado = factor(civil)
+estado
+```
+```{r}
+civil = factor(c('solteiro', 'solteiro', 'solteiro'), levels=c('casado', 'solteiro'))
+civil
+```
+```{r}
+table(civil)
+```
+```{r}
+sexo <- factor(c('f', 'm', 'm', 'm', 'f', 'm', 'f', 'm', 'f', 'f'))
+idade <- factor(c('adulto', 'adulto', 'jovem', 'jovem', 'adulto', 'adulto', 'adulto', 'jovem', 'adulto', 'jovem'))
+aux = table(sexo, idade)
+aux
+```
+```{r}
+prop.table(aux, 1)
+```
+```{r}
+prop.table(aux, 2)
+```
+# Sequências
+```{r}
+print(1:10)
+print(10:(15-1))
+print(10:15-1)
+print(5:0)
+print(seq(-4,1,0.1))
+print(seq(from=1, to=10, length=100))
+print(rep(5, 10))
+print(rep("yep", 3))
+print(rep(1:3, 5))
+print(
+rep(1:5, length.out=7))
+print(rnorm(10))
+print(rnorm(10, mean=0, sd=1))
+print(rt(10, df = 100))
+```
+# Indexação
+```{r}
+frutas = c('banana', 'maca', 'pera', 'uva', 'melancia')
+idx = c(1,2,5)
+frutas[idx]
+```
+```{r}
+frutas = rnorm(100, mean=0, sd=1)
+frutas[frutas > 0]
+frutas[frutas < -0.5 | frutas > 0.5]
+```
+```{r}
+idh = c(0.7, 0.8, 0.7, 0.8, 0.9)
+names(idh) = c('BR', 'CH', 'EUA', 'FR', 'AL')
+idh
+```
+```{r}
+idh[c('BR', 'AL')]
+```
+# Matrizes
+```{r}
+vendas <- c(45, 23, 66, 77, 33, 44, 56, 12, 78, 23, 78, 90)
+vendas
+dim(vendas) <- c(3, 4)
+vendas
+```
+
+```{r}
+vendas <- matrix(c(45, 23, 66, 77, 33, 44, 56, 12, 78, 23, 78, 90), nrow=3, ncol=4)
+vendas
+rownames(vendas) = c('loja1', 'loja2', 'loja3')
+colnames(vendas) = c('elet', 'livro', 'coz', 'info')
+vendas
+```
+```{r}
+vendas['loja1',]
+vendas[,'livro']
+vendas['loja1', 'livro']
+cbind(vendas, farm=c(60, 50, 0))
+rbind(vendas, loja4=c(78, 23, 78, 90))
+```
+
+```{r}
+m1 = matrix(c(5, 4, 6, 3, 10, 7), 2, 3, byrow=T)
+m2 = matrix(c(2, 1, 5, 3, 3, 8), 2, 3, byrow=T)
+m1
+```
+```{r}
+m1 = matrix(c(5, 4, 6, 3, 10, 7), 2, 3, byrow=T)
+m2 = t(m2)
+m1
+m2
+```
+```{r}
+m1 %*% m2
+```
+# Matrizes multidimensionais
+```{r}
+vendas <- c(45, 23, 66, 77, 33, 44, 56, 12, 78, 23, 78, 90)
+vendas
+
+dim(vendas) <- c(3, 2, 2)
+vendas
+
+vendas <- array(c(45, 23, 66, 77, 33, 44, 56, 12, 78, 23, 78, 90), dim=c(3, 2, 2))
+vendas
+```
+# Listas
+```{r}
+aluno = list(numero = 20023441, nome = "Joao da Silva", notas = c(10, 9, 7, 10))
+aluno
+aluno[[1]]
+aluno$numero
+names(aluno)
+
+aluno$pais = 'Br'
+aluno
+
+
+```
+```{r}
+joao = list(numero = 20023441, nome = 'Joao da Silva', notas = c(10, 9, 7, 10), pais='Br')
+ana = list(numero = 20023356, nome = 'Ana da Silva', notas = c(10, 10, 8, 9), pais='Br')
+maria = list(numero = 20032459, nome = 'Maria Joana', notas = c(9, 10, 8, 7), pais='Br')
+alunos = list(joao, ana, maria)
+alunos
+```
+# Data Frames
+```{r}
+notas = data.frame(numero = c(20023441, 20023356, 20032459, 20045654, 19054321), curso=c('BCC', 'BCC', 'BCC', 'EComp', 'EComp'), turma = c('Turma A', 'Turma A', 'Turma C', 'Turma B', 'Turma B'), notas = c(8.3, 9.3, 7.2, 8.5, 8.9), mencao=c('MS', 'SS', 'MS', 'MS', 'MS'))
+notas
+```
+```{r}
+notas[notas$curso == 'BCC',]
+```
+```{r}
+notas[notas$mencao == 'SS',]
+```
+```{r}
+notas[notas$curso == 'BCC', 'turma']
+```
+```{r}
+data(iris)
+iris
+```
+# Funções úteis 
+```{r}
+x = sample(seq(-10, 10, 0.1), 10)
+# soma
+sum(x)
+max(x)
+min(x)
+which.max(x)
+which.min(x)
+range(x)
+length(x)
+mean(x)
+median(x)
+sd(x)
+var(x)
+quantile(x)
+# normalização com media 0 e desvio 1
+scale(x)
+```
+```{r}
+x = c(10, 9, 8, 7, 6, 5, 4, 3, 2, 1)
+y = c(1, 2, 3)
+# ordenar o vetor
+sort(x)
+# inversa do vetor
+rev(x)
+# ranking dos valores
+rank(x)
+# raqiz quadrada
+sqrt(x)
+# Soma acumulada
+cumsum(x)
+# produto acumulado
+cumprod(x)
+# união entre dois conjuntos
+union(x, y)
+# interseccao entre dois conjuntos
+intersect(x, y)
+# a diferenca de x para y
+setdiff(x, y)
+```
+# Álgebra matricial
+```{r}
+x = matrix(sample(seq(-10, 10, 0.1), 9), nrow=3, ncol=3)
+y = matrix(sample(seq(-10, 10, 0.1), 9), nrow=3, ncol=3)
+# diaginal principal
+diag(x)
+# transposta
+t(x)
+# numero de linhas
+nrow(x)
+# numero de colunas
+ncol(x)
+# pruduto entre dois vetores
+x %*% y
+# determinante 
+det(x)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
