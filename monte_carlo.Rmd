@@ -1,0 +1,80 @@
+# Monte Carlo 
+
+### O que é 
+O termo “Método de Monte Carlo” surgiu no laboratório nacional de Los Alamos (EUA), no final dos anos 1940, durante o desenvolvimento de uma bomba atômica (Metropolis e Ulam, 1949). O termo “Monte Carlo” faz referência à cidade famosa por seus cassinos, que fazem uso de mecanismos “aleatórios” para jogos. O desenvolvimento destes métodos também contribuíram fortemente para o desenvolvimento dos primeiros computadores eletrônicos, acelarando a computação de tarefas numéricas repetitivas.
+
+Não existe um consenso em como os métodos de Monte Carlo poderiam ser definidos, mas algumas distinções podem ser feitas:
+
+Simulação: Sortear um valor de uma U(0,1) pode simular o lançamento de uma moeda: se for menor do que 0.5, atribua cara, caso contrário, coroa.
+
+Método de Monte Carlo: Derramar uma caixa de moedas em uma mesa e calcular a proporção de moedas que caem cara ou coroa.
+
+Simulação de Monte Carlo: Sortear um grande número de valores de uma U(0,1) e atribuir cara (menor que 0.5) ou coroa.
+
+### Os métodos de Monte Carlo também podem ser divididos em duas categorias:
+  - Integração de Monte Carlo : quando utilizado para resolver problemas de integração numérica
+
+  - Simulação de Monte Carlo : quando utilizado para resolver problemas mais gerais através de simulação
+  
+### Introdução - Projeto de análise de empréstimos
+Neste projeto vamos analisar a crise de 2008 provocada pelos bancos e seus empréstimos. Começaremos com algumas suposições simples e gradualmente adicionaremos mais variáveis ao nosso modelo para obter conclusões interessantes sobre quanto dinheiro o banco perde e como evitá-lo usando a probabilidade e o método de Monte Carlo.
+
+### Premissas
+  - Loan (Empréstimos) = $180.000
+
+  - Default rate (taxa padrão) = 2% (Pessoas que não podem devolver o dinheiro ao banco)
+
+  - Default loss (perda padrão) = $200.000
+
+  - Number of loans (número de empréstimos) : 10000
+
+  - Esses números são figurativos para fins de aprendizagem
+  
+### Quanto dinheiro o banco perde devido à inadimplência?
+Primeiro, vamos calcular matematicamente a quantidade de dinheiro que o banco perde devido à inadimplência, supondo uma taxa de juros de ** 0% ** (O banco empresta dinheiro de graça!). Podemos calcular essa perda de dinheiro como
+
+$$Loss=n_{loans}∗default_{rate}∗default_{loss}$$
+
+$$Loss=10000∗0.02∗200000$$
+
+$$Loss=40000000$$
+Parece bastante simples, certo? Agora vamos ver se podemos calcular esse resultado usando o método Monte Carlo. Embora possa parecer inútil realizar esta simulação para encontrar um resultado que obtivemos com uma equação simples, é necessário mostrar como esta técnica funciona (veremos como ela é útil nas próximas seções). Se não estiver familiarizado com este método, sugiro que você visite este <a href="https://towardsdatascience.com/the-house-always-wins-monte-carlo-simulation-eb82787da2a3">post</a>. Basicamente, este método consiste em repetir várias vezes um processo cujo resultado é aleatório para definir quantitativamente a probabilidade de ocorrência de um evento.
+
+No código abaixo, usamos a função * sample() * para escolher aleatoriamente um elemento de uma matriz (neste caso * padrão * ou * não padrão *) de acordo com as probailidades previamente definidas. Isso representa o caso de uma pessoa que recebeu um empréstimo, que pode ou não devolver o dinheiro ao banco. O tamanho da matriz representa a quantidade de pessoas que receberam empréstimos. Assim que tivermos os resultados de todos os clientes (reembolsados ou não reembolsados) passamos a somar todas as perdas (lembre-se que neste exemplo o banco não cobra taxa de juros) e obtemos o lucro do banco para este cenário. Isso nos dá uma ideia de quanto dinheiro o banco perderia devido à inadimplência. Indo um passo à frente, o que acontece se recriarmos este cenário 1000 vezes e calcularmos o lucro médio? Obtemos uma ideia melhor e mais precisa de quanto perderia o dinheiro. Este é o Método de Monte Carlo.
+
+```{m}
+## [1] "Calculated result: "
+```
+
+```{m}
+## [1] -4e+07
+```
+
+```{m}
+## [1] "Monte Carlo result: "
+```
+
+```{m}
+## [1] -40061600
+```
+
+### Qual é a taxa de juros que garante que o banco não perderá dinheiro?
+A próxima fórmula mostra a relação entre ganhos e perdas concedidos por empréstimos:
+
+$$
+Gain∗(1−default_{rate})−default_{loss}∗default_{rate}=Profit
+$$
+Isso significa que os ganhos provenientes das pessoas que pagaram o empréstimo, mais juros, menos o valor perdido com a inadimplência, representam o lucro do banco. No entanto, como neste caso queremos apenas não perder dinheiro, o lucro deve ser igual a 0.
+
+$$Gain∗(1−default_{rate})−default_{loss}∗default_{rate}=0$$ 
+Então 
+$$
+Gain = \frac{default_{loss} * default_{rate}}{(1 - default_{rate})}
+$$
+$$
+I = \frac{Gain}{Loan}
+$$
+Vamos ver se podemos calcular isso usando o método Monte Carlo.
+
+
+

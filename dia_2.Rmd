@@ -1,0 +1,138 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+# Entrada/Saída
+```{r}
+print(10)
+cat('x tem o valor de', 10, '\n')
+x = scan(n=5)
+```
+Condicionais
+```{r}
+x = 10
+if (x > 5) {
+  print('maior que cinco')
+} else if (x > 0 & x <= 5) {
+  print('maior que zero e menor que cinco')
+} else {
+  print('menor que zero')
+}
+```
+
+```{r}
+x = rnorm(10)
+ifelse(x > 0, '+', '-')
+```
+# Intruções iterativas
+```{r}
+x = 0
+while(x < 10) {
+  x = x + 1
+  cat('O valor de x eh', x, '\n')
+}
+```
+
+```{r}
+for(x in 1:10) {
+  cat('O valor de x eh', x, '\n')
+}
+```
+#### função para aplicação de blocos de código de forma iterativa em uma matriz
+```{r}
+m = matrix(1:9, nrow=3, ncol=3)
+apply(m, 1, sum)
+```
+#### função para aplicação de blocos de código de forma iterativa em uma lista
+```{r}
+lapply(1:5, function(i) {
+  aux = sample(seq(-10, 10, by=0.0001), 10)
+  sum(aux)
+})
+```
+```{r}
+loja = list('l1', 'l2', 'l3')
+valor = list(1:10, 11:20, 21:30)
+
+aux = mapply(function(val, loj) {
+  cat('A loja', loj, 'tem faturado o valor de', sum(val), '\n')
+}, val=valor, loj=loja)
+```
+#### função para aplicação de blocos de código de forma iterativa de maneira paralela
+```{r}
+require('parallel')
+
+mclapply(1:5, mc.cores=4, function(i) {
+  aux = sample(seq(-10, 10, by=0.0001), 10)
+  sum(aux)
+})
+```
+### comparando tempo de execução
+```{r}
+system.time(lapply(1:100, function(i) {
+  aux = seq(-10, 10, by=0.00001)
+  sum(aux)
+}))[3]
+```
+```{r}
+system.time(mclapply(1:100, mc.cores=6, function(i) {
+  aux = seq(-10, 10, by=0.00001)
+  sum(aux)
+}))[3]
+```
+# Funções 
+```{r}
+cel2far <- function(cel) {
+  return (9/5 * cel + 32)
+}
+#chamando a função
+cel = c(32, 26, 21, 17.5, 35.6, 42.5)
+cel2far(cel)
+```
+# Base de dados
+#### Criando um arquivo
+```{r}
+cat('ID;Nome;Nota\n434;Carlos;13.2\n523;Ana;15.1\n874;Susana;4.8\n', file="teste1.csv")
+```
+#### adicionando uma linha ao dataframe
+```{r}
+cat('103;Joaquim;15.9\n', file="teste1.csv", append = TRUE)
+```
+#### exemplificação do uso de comandos do terminal integrado com o R
+```{r}
+system(paste("printf 'ID;Nome;Nota\n434;Carlos;13.2\n523;Ana;15.1\n874;Susana;4.8\n103;Joaquim;15.9\n' > teste1.csv"))
+```
+#### leitura CSV
+```{r}
+data = read.table('teste1.csv', sep=';', header=T)
+data
+```
+#### fazendo o download de arquivos da internet 
+```{r}
+download.file('https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data', 'teste2.csv')
+data = read.table('teste2.csv', sep= ',', header=F)
+```
+#### base iris
+```{r}
+iris
+```
+#### para mostrar o cabeçalho
+```{r}
+head(iris)
+```
+#### resumindo as informações
+```{r}
+summary(iris)
+```
+
+
+
+
+
+
+
+
+
+
+
+
